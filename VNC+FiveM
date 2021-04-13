@@ -24,7 +24,8 @@ echo ""
 echo "Lista de Opções:"
 echo " 1 - Instalar Interface Grafica Light ~ VNC"
 echo " 2 - Configurar Partição Swap"
-echo " 3 - Sair do Script"
+echo " 3 - Baixar e Configurar Artefatos do Five M"
+echo " 4 - Sair do Script"
 echo ""
 echo "================================================"
 echo " Digite a opção desejada:"
@@ -79,8 +80,8 @@ case "$x" in
      echo "Criando novo arquivo xstartup com as linhas necessarias..."
      cd ~/.vnc/
      echo ""
-	 echo -e '#!/bin/sh \nunset SESSION_MANAGER \nunset DBUS_SESSION_BUS_ADDRESS \nstartxfce4 & \n[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup \n[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources \nxsetroot -solid grey \nvncconfig -iconic & \nmetacity & \nnautilus &' > xstartup
-	 echo "Arquivo criado com sucesso!!!"
+     echo -e '#!/bin/sh \nunset SESSION_MANAGER \nunset DBUS_SESSION_BUS_ADDRESS \nstartxfce4 & \n[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup \n[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources \nxsetroot -solid grey \nvncconfig -iconic & \nmetacity & \nnautilus &' > xstartup
+     echo "Arquivo criado com sucesso!!!"
      cd ~/
      echo ""
      echo " Na Sua Localhost abra o painel de conexão ssh e digite a seguinte linha de código:"
@@ -99,18 +100,18 @@ case "$x" in
      echo "=============================================================="
 ;;
    2)
-     echo " Criando Partição Swap.."
+         echo " Criando Partição Swap.."
 	 echo "Verificando se já existe alguma partição swap:"
 	 sudo swapon --show
 	 sleep 1
 	 echo "Verificando espaço referente a partição swap:"
 	 sudo free -h
-     sleep 1
+         sleep 1
 	 echo "Verificando o Espaço Disponível na Partição do Disco Rígido"
 	 sudo df -h
 	 sleep 2
 	 echo "Criando um Arquivo de Swap"
-     echo " Digite o tamanho desejado de swap:"
+         echo " Digite o tamanho desejado de swap:"
 	 echo " Exemplo: 1G, 2G, 3G, 4G.. Numero:G, o G precisa ser maiusculo!"
 	 echo ""
 	 read t
@@ -161,7 +162,7 @@ case "$x" in
 	 echo "=============================================================="
 ;;
    3)
-     echo " Bem Vindo as Configurações de instalação do servidor de fivem!"
+         echo " Bem Vindo as Configurações de instalação do servidor de fivem!"
 	 echo " Preencha com as informações corretas sem erros!"
 	 echo ""
 	 echo " Qual o nome de usuario em que deseja instalar os arquivos?"
@@ -214,7 +215,7 @@ case "$x" in
 		   cd server-data
 		   echo "Digite o numero da porta que deseja usar para conectar ao servidor:"
 		   read p
-		   echo " Você selecionou a porta: ($p)
+		   echo " Você selecionou a porta: ($p)"
 		   echo "Copie e Cole aqui a licensekey criada no https://keymaster.fivem.net/"
 		   read l
 		   echo "A Key Inserida foi: ($l)"
@@ -240,16 +241,16 @@ case "$x" in
 		 
 		 n)
 		   echo " Ok, Fecharemos o script, basta você iniciar o script: run.sh para prosseguir com o start do servidor"
-       echo "Localização: /home/$y/FXServer/server/run.sh "
+                   echo "Localização: /home/$y/FXServer/server/run.sh "
 		   sleep 7
 		   clear;
 		   exit;
 		 echo "======="
 		 ;;
-		 
-	  done
-     }
-     menu
+	   esac 
+	   done
+      }
+      menu
 	 sleep 2
      echo "=============================================================="
 ;;
