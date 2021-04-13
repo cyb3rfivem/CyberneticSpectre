@@ -211,7 +211,7 @@ case "$x" in
 		 y)
 		   echo "Você escolheu por baixar a server-data do Five M padrão/Inicial"
 		   echo ""
-		   sudo git clone https://github.com/citizenfx/cfx-server-data.git /home/username/FXServer/server-data
+		   sudo git clone https://github.com/citizenfx/cfx-server-data.git /home/$y/FXServer/server-data
 		   echo ""
 		   cd server-data
 		   echo "Digite o numero da porta que deseja usar para conectar ao servidor:"
