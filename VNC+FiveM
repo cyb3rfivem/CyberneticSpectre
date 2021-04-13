@@ -1,0 +1,268 @@
+#!bin/bash
+x="option"
+i="ipvps"
+u="uservps"
+k="keyvps"
+d="display"
+t="tswap"
+y="fxuser"
+r="artlink"
+z="yesno"
+p="svport"
+l="licensekey"
+s="steamkey"
+h="hostnamesv"
+n="projetname"
+menu ()
+{
+while true do $x !="option"
+do
+clear
+echo "================================================"
+echo "Bem Vindo ao Script de Configuração da VPS"
+echo ""
+echo "Lista de Opções:"
+echo " 1 - Instalar Interface Grafica Light ~ VNC"
+echo " 2 - Configurar Partição Swap"
+echo " 3 - Sair do Script"
+echo ""
+echo "================================================"
+echo " Digite a opção desejada:"
+read x
+echo " Opção selecionada: ($x)"
+echo "================================================"
+
+case "$x" in
+
+    1)
+     echo "================================================"
+     echo " Digite o IP da sua VPS:"
+     read i
+     echo " O IP Informado foi: ($i)"
+     echo "================================================"
+     echo ""
+     echo "================================================"
+     echo " Digite o nome de usuario da sua VPS:"
+     read u
+     echo " O Usuario Informado foi: ($u)"
+     echo "================================================"
+     echo ""
+     echo "==============================================================="
+     echo " Digite o nome da chave '.key' que você ira usar para conectar:"
+     echo " Exemplo: chave.key"
+     read k
+     echo " A Chave Informada foi: ($k)"
+     echo "==============================================================="
+     echo ""
+     echo " Instalando Interface Grafica VNC ~ Light"
+     echo "Procurando atualizações de pacotes da distro..."
+     sudo apt-get update -y
+     echo "Busca Finalizada.."
+     echo ""
+     echo " Atualizando Pacotes da distro..."
+     sudo apt-get upgrade -y
+     echo "Atualização de pacotes finalizada..."
+     echo ""
+     echo "Instalando scripts de vnc e editores de texto...."
+     sudo apt install tightvncserver xfce4 xfce4-goodies metacity nautilus firefox nano -y
+     echo "Instalação finalizada..."
+     echo "Iniciando VNC Server"
+     vncserver
+     echo "Iniciado..."
+     echo ""
+     echo " Configurando Arquivo: ~/.vnc/xstartup "
+     echo ""
+     echo " Criando backup do arquivo original xstartup..."
+     sudo mv ~/.vnc/xstartup ~/.vnc/xstartup.bkp
+     echo "Backup Criado!!"
+     echo ""
+     echo "Criando novo arquivo xstartup com as linhas necessarias..."
+     cd ~/.vnc/
+     echo ""
+	 echo -e '#!/bin/sh \nunset SESSION_MANAGER \nunset DBUS_SESSION_BUS_ADDRESS \nstartxfce4 & \n[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup \n[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources \nxsetroot -solid grey \nvncconfig -iconic & \nmetacity & \nnautilus &' > xstartup
+	 echo "Arquivo criado com sucesso!!!"
+     cd ~/
+     echo ""
+     echo " Na Sua Localhost abra o painel de conexão ssh e digite a seguinte linha de código:"
+     echo " ./ssh.exe -L 5902:localhost:5902 -i $k $u@$i"
+     echo " Aguarde 12 Segundos para o script continuar..."
+     sleep 12
+     echo ""
+     echo " Informe o numero do display que você deseja abrir a VNC"
+     echo " Exemplo: 1, 2, 3, 4, etc..."
+     read d
+     echo " Iniciando servidor VNC no diplay $d"
+     vncserver -geometry 1024x768 :$d
+     echo " Iniciado! Para conectar ao VNC Conecte com o seguinte comando na sua localhost: localhost:$d"
+     echo " VNC Configurado e Iniciado com sucesso!!!"
+     sleep 2
+     echo "=============================================================="
+;;
+   2)
+     echo " Criando Partição Swap.."
+	 echo "Verificando se já existe alguma partição swap:"
+	 sudo swapon --show
+	 sleep 1
+	 echo "Verificando espaço referente a partição swap:"
+	 sudo free -h
+     sleep 1
+	 echo "Verificando o Espaço Disponível na Partição do Disco Rígido"
+	 sudo df -h
+	 sleep 2
+	 echo "Criando um Arquivo de Swap"
+     echo " Digite o tamanho desejado de swap:"
+	 echo " Exemplo: 1G, 2G, 3G, 4G.. Numero:G, o G precisa ser maiusculo!"
+	 echo ""
+	 read t
+	 echo ""
+	 sudo fallocate -l $t /swapfile
+	 echo ""
+	 echo "Verificando se a quantidade correta de espaço foi reservada:"
+	 sudo ls -lh /swapfile
+	 sleep 2
+	 echo ""
+	 echo "Habilitando o Arquivo de Swap"
+	 sudo chmod 600 /swapfile
+	 echo ""
+	 echo "Verificando a alteração de permissões:"
+	 sudo ls -lh /swapfile
+	 sleep 1
+	 echo ""
+	 echo "Podemos agora marcar o arquivo como espaço de swap:"
+	 sudo mkswap /swapfile
+	 sleep 1
+	 echo ""
+	 echo "Após marcar o arquivo, podemos habilitar o arquivo de swap, permitindo que nosso sistema comece a utilizá-lo"
+	 sudo swapon /swapfile
+	 echo ""
+	 echo "Verifique se o swap está disponível:"
+	 sudo swapon --show
+	 sleep 2
+	 echo ""
+	 echo "Podemos verificar a saída do utilitário free novamente para corroborar nossos resultados:"
+	 sudo free -h
+	 sleep 2
+	 echo ""
+	 echo "Tornando o Arquivo de Swap Permanente.."
+	 echo "Fazendo um backup do arquivo /etc/fstab para o caso de algo dar errado:"
+	 sudo cp /etc/fstab /etc/fstab.bak
+	 echo ""
+	 echo "Adicione a informação do arquivo de swap no final do seu arquivo /etc/fstab digitando:"
+	 sudo echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+	 echo "Em seguida, avaliaremos algumas configurações que podemos atualizar para ajustar nosso espaço de swap."
+	 sleep 3
+	 echo ""
+	 echo "As Configurações referentes a Swappiness e Cache da Swap,"
+	 echo " deverão ser ajustadas de forma manualmente, para evitar problemas,"
+	 echo " de acordo com as necessidades de cada um...."
+	 echo " Parabéns seu Swap esta configurado! Reinicie e Digite: sudo free -h"
+	 echo " Para checar a swap e seu tamanho atual."
+	 sleep 1
+	 echo "=============================================================="
+;;
+   3)
+     echo " Bem Vindo as Configurações de instalação do servidor de fivem!"
+	 echo " Preencha com as informações corretas sem erros!"
+	 echo ""
+	 echo " Qual o nome de usuario em que deseja instalar os arquivos?"
+	 echo " Atenção! é o nome que fica após /home/ exemplo: /home/ubuntu"
+	 echo ""
+	 sleep 2
+	 echo " Coloque apenas o nome do usuário sem /home/... Exemplo: ubuntu"
+	 read y
+	 echo " O Nome de usuário selecionado foi: ($y)"
+	 sleep 1
+	 echo "Criando pasta FXServer na home do usuario padrão do sistema."
+	 sudo mkdir -p /home/$y/FXServer/
+	 sudo mkdir -p /home/$y/FXServer/server
+	 echo "Pastas criadas!!"
+	 echo ""
+	 echo " Acesse o link a seguir copie o link de download da ultima versão"
+	 echo "Cole no campo abaixo o link da versão dos artefatos que deseja instalar:"
+	 read r
+	 echo "Acessando pastas e baixando os artefatos..."
+	 cd /home/$y/FXServer/server
+	 sudo wget $r
+	 echo "Download Completo!!"
+	 echo "Iremos checar se você possui o pacote xz-utils para extrair o artefo!"
+	 sudo apt-get update
+	 sudo apt-get install xz-utils
+	 echo "Pacotes instalados/Checados.. Extraindo artefatos!"
+	 sudo tar xf fx.tar.xz
+	 sleep 1
+	 echo "Arquivos extraidos.. excluindo arquivo compactado.."
+	 sudo rm -r fx.tar.xz
+	 echo " A Seguir escolha as opções do server-data"
+	 menu ()
+     {
+      while true do $z !="yesno"
+      do
+	  echo " Você deseja baixar o Server-Data disponível do FiveM?"
+	  echo " y - sim"
+	  echo " n - não"
+	  echo "Digite a opção desejada:"
+	  read z
+	  echo "==========================="
+	  
+	  case "$z" in
+	     
+		 y)
+		   echo "Você escolheu por baixar a server-data do Five M padrão/Inicial"
+		   echo ""
+		   sudo git clone https://github.com/citizenfx/cfx-server-data.git /home/username/FXServer/server-data
+		   echo ""
+		   cd server-data
+		   echo "Digite o numero da porta que deseja usar para conectar ao servidor:"
+		   read p
+		   echo " Você selecionou a porta: ($p)
+		   echo "Copie e Cole aqui a licensekey criada no https://keymaster.fivem.net/"
+		   read l
+		   echo "A Key Inserida foi: ($l)"
+		   echo ""
+		   echo "Copie e Cole aqui a sua Steam Web Api Key, ou apenas de um espaço e aperte enter"
+		   echo " Para pegar a sua webapi key da steam acesse: https://steamcommunity.com/dev/apikey "
+		   read s
+		   echo " Digite o hostname do seu servidor:"
+		   echo " Exemplo: Brasil RolePlay"
+		   echo " Insira agora seu hostname:"
+		   read h
+		   echo " Digite o nome do seu projeto:"
+		   read n
+		   echo "Ok, Anotamos suas preferências criaremos um server.cfg com as informações inseridas."
+		   sudo echo '#Portas de Conexão do servidor. \nendpoint_add_tcp "0.0.0.0:$p" \nendpoint_add_udp "0.0.0.0:$p" \n# Resources do servidor. \nensure mapmanager \nensure chat \nensure spawnmanager \nensure sessionmanager \nensure basic-gamemode \nensure hardcap \nensure rconlog \n#Habilitar ScriptHook \nsv_scriptHookAllowed 0 \n# Password Admin Master rcon_password "SUAPASSWORD" \n#rcon_password "" \n# - sets tags "roleplay, military, tanks" \nsets tags "default" \n# Por Exemplo: "en-US", "fr-CA", "nl-NL", "de-DE", "en-GB", "pt-BR" \nsets locale "root-AQ"  \n#Banner do Servidor. \n#sets banner_detail "https://url.to/image.png" \n#sets banner_connecting "https://url.to/image.png" \n# hostname do seu servidor. \nsv_hostname "$h" \n# Nome do projeto do seu servidor: \nsets sv_projectName "$n" \n# Insira descrição do seu servidor: \nsets sv_projectDesc "Default FXServer requiring configuration" \n# Nested configs! \n#exec server_internal.cfg \n# Icone de carregamento do servidor (96x96 PNG file) \n#load_server_icon myLogo.png \n# convars which can be used in scripts \nset temp_convar "hey world!" \n#Remova o # para o servidor aparecer na master list \n#sv_master1 "" \n# Add system admins \nadd_ace group.admin command allow # allow all commands \nadd_ace group.admin command.quit deny # but don't allow quit \nadd_principal identifier.fivem:1 group.admin # add the admin to the group \n# enable OneSync (required for server-side state awareness) \nset onesync on \n# Server player slot limit (see https://fivem.net/server-hosting for limits) \nsv_maxclients 20 \n# Steam Web API key, if you want to use Steam authentication (https://steamcommunity.com/dev/apikey) \nset steam_webApiKey "$s" \n# License key for your server (https://keymaster.fivem.net) \nsv_licenseKey $l' > server.cfg
+		   echo " Tudo Pronto!!!! Iniciaremos seu servidor para teste!"
+		   echo " Caso deseje fechar apenas de Ctrl+C"
+		   sleep 4
+		   sudo bash /home/$y/FXServer/server/run.sh +exec server.cfg
+		   sleep 1
+		 echo "======="
+		 ;;
+		 
+		 n)
+		   echo " Ok, Fecharemos o script, basta você iniciar o script: run.sh para prosseguir com o start do servidor"
+       echo "Localização: /home/$y/FXServer/server/run.sh "
+		   sleep 7
+		   clear;
+		   exit;
+		 echo "======="
+		 ;;
+		 
+	  done
+     }
+     menu
+	 sleep 2
+     echo "=============================================================="
+;;
+   4)
+     echo " Saindo...  "
+     sleep 5
+     clear;
+     exit;
+     echo "=============================================================="
+;;
+*)
+echo " Opção inválida! "
+esac
+done
+}
+menu
