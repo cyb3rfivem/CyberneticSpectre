@@ -202,6 +202,7 @@ case "$x" in
 	  echo " Você deseja baixar o Server-Data disponível do FiveM?"
 	  echo " y - sim"
 	  echo " n - não"
+	  echo " s - sair"
 	  echo "Digite a opção desejada:"
 	  read z
 	  echo "==========================="
@@ -218,6 +219,8 @@ case "$x" in
 		   echo " Tudo Pronto!!!! Iniciaremos seu servidor para teste!"
 		   echo " Caso deseje fechar apenas de Ctrl+C"
 		   sleep 1
+		   clear;
+           exit;
 		 echo "======="
 		 ;;
 		 
@@ -229,6 +232,13 @@ case "$x" in
 		   exit;
 		 echo "======="
 		 ;;
+		 s)
+           echo " Saindo...  "
+           sleep 1
+           clear;
+           exit;
+         echo "======="
+         ;;
 	   esac 
 	   done
       }
