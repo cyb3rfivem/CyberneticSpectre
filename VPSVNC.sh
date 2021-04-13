@@ -11,7 +11,7 @@ while true do $x !="option"
 do
 clear
 echo "================================================"
-echo "Bem Vindo ao Script de Configuração do VNC na VPS"
+echo "Bem Vindo ao Script de Configuração da VPS"
 echo ""
 echo "Lista de Opções:"
 echo " 1 - Instalar Interface Grafica Light ~ VNC"
@@ -71,8 +71,8 @@ case "$x" in
      echo "Criando novo arquivo xstartup com as linhas necessarias..."
      cd ~/.vnc/
      echo ""
-	 echo -e '#!/bin/sh \nunset SESSION_MANAGER \nunset DBUS_SESSION_BUS_ADDRESS \nstartxfce4 & \n[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup \n[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources \nxsetroot -solid grey \nvncconfig -iconic & \nmetacity & \nnautilus &' > xstartup
-	 echo "Arquivo criado com sucesso!!!"
+     echo -e '#!/bin/sh \nunset SESSION_MANAGER \nunset DBUS_SESSION_BUS_ADDRESS \nstartxfce4 & \n[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup \n[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources \nxsetroot -solid grey \nvncconfig -iconic & \nmetacity & \nnautilus &' > xstartup
+     echo "Arquivo criado com sucesso!!!"
      cd ~/
      echo ""
      echo " Na Sua Localhost abra o painel de conexão ssh e digite a seguinte linha de código:"
@@ -92,65 +92,65 @@ case "$x" in
 ;;
    2)
      echo " Criando Partição Swap.."
-	 echo "Verificando se já existe alguma partição swap:"
-	 sudo swapon --show
-	 sleep 1
-	 echo "Verificando espaço referente a partição swap:"
-	 sudo free -h
+     echo "Verificando se já existe alguma partição swap:"
+     sudo swapon --show
      sleep 1
-	 echo "Verificando o Espaço Disponível na Partição do Disco Rígido"
-	 sudo df -h
-	 sleep 2
-	 echo "Criando um Arquivo de Swap"
+     echo "Verificando espaço referente a partição swap:"
+     sudo free -h
+     sleep 1
+     echo "Verificando o Espaço Disponível na Partição do Disco Rígido"
+     sudo df -h
+     sleep 2
+     echo "Criando um Arquivo de Swap"
      echo " Digite o tamanho desejado de swap:"
-	 echo " Exemplo: 1G, 2G, 3G, 4G.. Numero:G, o G precisa ser maiusculo!"
-	 echo ""
-	 read t
-	 echo ""
-	 sudo fallocate -l $t /swapfile
-	 echo ""
-	 echo "Verificando se a quantidade correta de espaço foi reservada:"
-	 sudo ls -lh /swapfile
-	 sleep 2
-	 echo ""
-	 echo "Habilitando o Arquivo de Swap"
-	 sudo chmod 600 /swapfile
-	 echo ""
-	 echo "Verificando a alteração de permissões:"
-	 sudo ls -lh /swapfile
-	 sleep 1
-	 echo ""
-	 echo "Podemos agora marcar o arquivo como espaço de swap:"
-	 sudo mkswap /swapfile
-	 sleep 1
-	 echo ""
-	 echo "Após marcar o arquivo, podemos habilitar o arquivo de swap, permitindo que nosso sistema comece a utilizá-lo"
-	 sudo swapon /swapfile
-	 echo ""
-	 echo "Verifique se o swap está disponível:"
-	 sudo swapon --show
-	 sleep 2
-	 echo ""
-	 echo "Podemos verificar a saída do utilitário free novamente para corroborar nossos resultados:"
-	 sudo free -h
-	 sleep 2
-	 echo ""
-	 echo "Tornando o Arquivo de Swap Permanente.."
-	 echo "Fazendo um backup do arquivo /etc/fstab para o caso de algo dar errado:"
-	 sudo cp /etc/fstab /etc/fstab.bak
-	 echo ""
-	 echo "Adicione a informação do arquivo de swap no final do seu arquivo /etc/fstab digitando:"
-	 sudo echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
-	 echo "Em seguida, avaliaremos algumas configurações que podemos atualizar para ajustar nosso espaço de swap."
-	 sleep 3
-	 echo ""
-	 echo "As Configurações referentes a Swappiness e Cache da Swap,"
-	 echo " deverão ser ajustadas de forma manualmente, para evitar problemas,"
-	 echo " de acordo com as necessidades de cada um...."
-	 echo " Parabéns seu Swap esta configurado! Reinicie e Digite: sudo free -h"
-	 echo " Para checar a swap e seu tamanho atual."
-	 sleep 1
-	 echo "=============================================================="
+     echo " Exemplo: 1G, 2G, 3G, 4G.. Numero:G, o G precisa ser maiusculo!"
+     echo ""
+     read t
+     echo ""
+     sudo fallocate -l $t /swapfile
+     echo ""
+     echo "Verificando se a quantidade correta de espaço foi reservada:"
+     sudo ls -lh /swapfile
+     sleep 2
+     echo ""
+     echo "Habilitando o Arquivo de Swap"
+     sudo chmod 600 /swapfile
+     echo ""
+     echo "Verificando a alteração de permissões:"
+     sudo ls -lh /swapfile
+     sleep 1
+     echo ""
+     echo "Podemos agora marcar o arquivo como espaço de swap:"
+     sudo mkswap /swapfile
+     sleep 1
+     echo ""
+     echo "Após marcar o arquivo, podemos habilitar o arquivo de swap, permitindo que nosso sistema comece a utilizá-lo"
+     sudo swapon /swapfile
+     echo ""
+     echo "Verifique se o swap está disponível:"
+     sudo swapon --show
+     sleep 2
+     echo ""
+     echo "Podemos verificar a saída do utilitário free novamente para corroborar nossos resultados:"
+     sudo free -h
+     sleep 2
+     echo ""
+     echo "Tornando o Arquivo de Swap Permanente.."
+     echo "Fazendo um backup do arquivo /etc/fstab para o caso de algo dar errado:"
+     sudo cp /etc/fstab /etc/fstab.bak
+     echo ""
+     echo "Adicione a informação do arquivo de swap no final do seu arquivo /etc/fstab digitando:"
+     sudo echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+     echo "Em seguida, avaliaremos algumas configurações que podemos atualizar para ajustar nosso espaço de swap."
+     sleep 3
+     echo ""
+     echo "As Configurações referentes a Swappiness e Cache da Swap,"
+     echo " deverão ser ajustadas de forma manualmente, para evitar problemas,"
+     echo " de acordo com as necessidades de cada um...."
+     echo " Parabéns seu Swap esta configurado! Reinicie e Digite: sudo free -h"
+     echo " Para checar a swap e seu tamanho atual."
+     sleep 1
+     echo "=============================================================="
 ;;
    3)
      echo " Saindo...  "
