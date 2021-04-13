@@ -25,7 +25,8 @@ echo "Lista de Opções:"
 echo " 1 - Instalar Interface Grafica Light ~ VNC"
 echo " 2 - Configurar Partição Swap"
 echo " 3 - Baixar e Configurar Artefatos do Five M"
-echo " 4 - Sair do Script"
+echo " 4 - Instalar e Executar XAMPP"
+echo " 5 - Sair do Script"
 echo ""
 echo "================================================"
 echo " Digite a opção desejada:"
@@ -211,27 +212,10 @@ case "$x" in
 		 y)
 		   echo "Você escolheu por baixar a server-data do Five M padrão/Inicial"
 		   echo ""
-		   sudo git clone https://github.com/citizenfx/cfx-server-data.git /home/$y/FXServer/server-data
+		   sudo git clone https://github.com/citizenfx/cfx-server-data.git /home/$y/FXServer/server/server-data
 		   echo ""
-		   cd server-data
-		   echo "Digite o numero da porta que deseja usar para conectar ao servidor:"
-		   read p
-		   echo " Você selecionou a porta: ($p)"
-		   echo "Copie e Cole aqui a licensekey criada no https://keymaster.fivem.net/"
-		   read l
-		   echo "A Key Inserida foi: ($l)"
-		   echo ""
-		   echo "Copie e Cole aqui a sua Steam Web Api Key, ou apenas de um espaço e aperte enter"
-		   echo " Para pegar a sua webapi key da steam acesse: https://steamcommunity.com/dev/apikey "
-		   read s
-		   echo " Digite o hostname do seu servidor:"
-		   echo " Exemplo: Brasil RolePlay"
-		   echo " Insira agora seu hostname:"
-		   read h
-		   echo " Digite o nome do seu projeto:"
-		   read n
-		   echo "Ok, Anotamos suas preferências criaremos um server.cfg com as informações inseridas."
-		   sudo echo '#Portas de Conexão do servidor. \nendpoint_add_tcp "0.0.0.0:$p" \nendpoint_add_udp "0.0.0.0:$p" \n# Resources do servidor. \nensure mapmanager \nensure chat \nensure spawnmanager \nensure sessionmanager \nensure basic-gamemode \nensure hardcap \nensure rconlog \n#Habilitar ScriptHook \nsv_scriptHookAllowed 0 \n# Password Admin Master rcon_password "SUAPASSWORD" \n#rcon_password "" \n# - sets tags "roleplay, military, tanks" \nsets tags "default" \n# Por Exemplo: "en-US", "fr-CA", "nl-NL", "de-DE", "en-GB", "pt-BR" \nsets locale "root-AQ"  \n#Banner do Servidor. \n#sets banner_detail "https://url.to/image.png" \n#sets banner_connecting "https://url.to/image.png" \n# hostname do seu servidor. \nsv_hostname "$h" \n# Nome do projeto do seu servidor: \nsets sv_projectName "$n" \n# Insira descrição do seu servidor: \nsets sv_projectDesc "Default FXServer requiring configuration" \n# Nested configs! \n#exec server_internal.cfg \n# Icone de carregamento do servidor (96x96 PNG file) \n#load_server_icon myLogo.png \n# convars which can be used in scripts \nset temp_convar "hey world!" \n#Remova o # para o servidor aparecer na master list \n#sv_master1 "" \n# Add system admins \nadd_ace group.admin command allow # allow all commands \nadd_ace group.admin command.quit deny # but don't allow quit \nadd_principal identifier.fivem:1 group.admin # add the admin to the group \n# enable OneSync (required for server-side state awareness) \nset onesync on \n# Server player slot limit (see https://fivem.net/server-hosting for limits) \nsv_maxclients 20 \n# Steam Web API key, if you want to use Steam authentication (https://steamcommunity.com/dev/apikey) \nset steam_webApiKey "$s" \n# License key for your server (https://keymaster.fivem.net) \nsv_licenseKey $l' > server.cfg
+		   cd /home/$y/FXServer/server/server-data
+           sudo wget https://github.com/cyb3rfivem/vps-configuracao/releases/download/1/server.cfg
 		   echo " Tudo Pronto!!!! Iniciaremos seu servidor para teste!"
 		   echo " Caso deseje fechar apenas de Ctrl+C"
 		   sleep 4
@@ -256,8 +240,22 @@ case "$x" in
      echo "=============================================================="
 ;;
    4)
+     echo " Baixando e Configurando Cliente MySql: XAMPP"
+	 echo ""
+	 cd ~/
+	 echo "Usaremos a versão 8.0.3 Caso precise atualize manualmente."
+	 sudo wget https://www.apachefriends.org/xampp-files/8.0.3/xampp-linux-x64-8.0.3-0-installer.run
+	 sudo chmod +x xampp-linux-x64-8.0.3-0-installer.run
+	 sudo ./xampp-linux-x64-8.0.3-0-installer.run
+	 sleep 2
+	 sudo rm -r xampp-linux-x64-8.0.3-0-installer.run
+	 sudo /opt/lampp/xampp startmysql
+	 sleep 2
+     echo "=============================================================="
+;;
+   5)
      echo " Saindo...  "
-     sleep 5
+     sleep 1
      clear;
      exit;
      echo "=============================================================="
