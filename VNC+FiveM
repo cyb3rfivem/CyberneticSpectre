@@ -217,8 +217,6 @@ case "$x" in
            sudo wget https://github.com/cyb3rfivem/vps-configuracao/releases/download/1/server.cfg
 		   echo " Tudo Pronto!!!! Iniciaremos seu servidor para teste!"
 		   echo " Caso deseje fechar apenas de Ctrl+C"
-		   sleep 4
-		   sudo bash /home/$y/FXServer/server/run.sh +exec server.cfg
 		   sleep 1
 		 echo "======="
 		 ;;
