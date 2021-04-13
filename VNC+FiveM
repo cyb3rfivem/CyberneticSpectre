@@ -174,8 +174,8 @@ case "$x" in
 	 echo " O Nome de usuário selecionado foi: ($y)"
 	 sleep 1
 	 echo "Criando pasta FXServer na home do usuario padrão do sistema."
-	 sudo mkdir -p /home/$y/FXServer/
-	 sudo mkdir -p /home/$y/FXServer/server
+	 mkdir -p /home/$y/FXServer/
+	 mkdir -p /home/$y/FXServer/server
 	 echo "Pastas criadas!!"
 	 echo ""
 	 echo " Acesse o link a seguir copie o link de download da ultima versão"
@@ -184,16 +184,16 @@ case "$x" in
 	 read r
 	 echo "Acessando pastas e baixando os artefatos..."
 	 cd /home/$y/FXServer/server
-	 sudo wget $r
+	 wget $r
 	 echo "Download Completo!!"
 	 echo "Iremos checar se você possui o pacote xz-utils para extrair o artefo!"
 	 sudo apt-get update
 	 sudo apt-get install xz-utils
 	 echo "Pacotes instalados/Checados.. Extraindo artefatos!"
-	 sudo tar xf fx.tar.xz
+	 tar xf fx.tar.xz
 	 sleep 1
 	 echo "Arquivos extraidos.. excluindo arquivo compactado.."
-	 sudo rm -r fx.tar.xz
+	 rm -r fx.tar.xz
 	 echo " A Seguir escolha as opções do server-data"
 	 menu ()
      {
@@ -212,10 +212,10 @@ case "$x" in
 		 y)
 		   echo "Você escolheu por baixar a server-data do Five M padrão/Inicial"
 		   echo ""
-		   sudo git clone https://github.com/citizenfx/cfx-server-data.git /home/$y/FXServer/server/server-data
+		   git clone https://github.com/citizenfx/cfx-server-data.git /home/$y/FXServer/server/server-data
 		   echo ""
 		   cd /home/$y/FXServer/server/server-data
-           sudo wget https://github.com/cyb3rfivem/vps-configuracao/releases/download/1/server.cfg
+           wget https://github.com/cyb3rfivem/vps-configuracao/releases/download/1/server.cfg
 		   echo " Tudo Pronto!!!! Iniciaremos seu servidor para teste!"
 		   echo " Caso deseje fechar apenas de Ctrl+C"
 		   sleep 1
