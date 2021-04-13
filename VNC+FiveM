@@ -169,7 +169,6 @@ case "$x" in
 	 echo " Qual o nome de usuario em que deseja instalar os arquivos?"
 	 echo " Atenção! é o nome que fica após /home/ exemplo: /home/ubuntu"
 	 echo ""
-	 sleep 2
 	 echo " Coloque apenas o nome do usuário sem /home/... Exemplo: ubuntu"
 	 read y
 	 echo " O Nome de usuário selecionado foi: ($y)"
