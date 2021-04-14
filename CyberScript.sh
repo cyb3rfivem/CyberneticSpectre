@@ -75,8 +75,8 @@ case "$x" in
      echo "Criando novo arquivo xstartup com as linhas necessarias..."
      cd ~/.vnc/
      echo ""
-	 echo -e '#!/bin/sh \nunset SESSION_MANAGER \nunset DBUS_SESSION_BUS_ADDRESS \nstartxfce4 & \n[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup \n[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources \nxsetroot -solid grey \nvncconfig -iconic & \nmetacity & \nnautilus &' > xstartup
-	 echo "Arquivo criado com sucesso!!!"
+     echo -e '#!/bin/sh \nunset SESSION_MANAGER \nunset DBUS_SESSION_BUS_ADDRESS \nstartxfce4 & \n[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup \n[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources \nxsetroot -solid grey \nvncconfig -iconic & \nmetacity & \nnautilus &' > xstartup
+     echo "Arquivo criado com sucesso!!!"
      cd ~/
      echo ""
      echo " Na Sua Localhost abra o painel de conexão ssh e digite a seguinte linha de código:"
@@ -94,19 +94,19 @@ case "$x" in
      sleep 2
      echo "=============================================================="
 ;;
-   2)
-     echo " Criando Partição Swap.."
+       2)
+	 echo " Criando Partição Swap.."
 	 echo "Verificando se já existe alguma partição swap:"
 	 sudo swapon --show
 	 sleep 1
 	 echo "Verificando espaço referente a partição swap:"
 	 sudo free -h
-     sleep 1
+	 sleep 1
 	 echo "Verificando o Espaço Disponível na Partição do Disco Rígido"
 	 sudo df -h
 	 sleep 2
 	 echo "Criando um Arquivo de Swap"
-     echo " Digite o tamanho desejado de swap:"
+	 echo " Digite o tamanho desejado de swap:"
 	 echo " Exemplo: 1G, 2G, 3G, 4G.. Numero:G, o G precisa ser maiusculo!"
 	 echo ""
 	 read t
@@ -156,8 +156,8 @@ case "$x" in
 	 sleep 1
 	 echo "=============================================================="
 ;;
-   3)
-     echo " Bem Vindo as Configurações de instalação do servidor de fivem!"
+       3)
+	 echo " Bem Vindo as Configurações de instalação do servidor de fivem!"
 	 echo " Preencha com as informações corretas sem erros!"
 	 echo ""
 	 echo " Qual o nome de usuario em que deseja instalar os arquivos?"
@@ -209,7 +209,7 @@ case "$x" in
 		   git clone https://github.com/citizenfx/cfx-server-data.git /home/$y/FXServer/server/server-data
 		   echo ""
 		   cd /home/$y/FXServer/server/server-data
-           echo "Iniciando o Script de Criação da CFG!!!"
+		   echo "Iniciando o Script de Criação da CFG!!!"
 		   sleep 2
 		   #!bin/sh
 		   ps="portaservidor"
@@ -393,34 +393,34 @@ case "$x" in
 		   echo " Caso deseje fechar apenas de Ctrl+C"
 		   sleep 1
 		   clear;
-           exit;
+                   exit;
 		 echo "======="
 		 ;;
 		 
 		 n)
 		   echo " Ok, Fecharemos o script, basta você iniciar o script: run.sh para prosseguir com o start do servidor"
-           echo "Localização: /home/$y/FXServer/server/run.sh "
+                   echo "Localização: /home/$y/FXServer/server/run.sh "
 		   sleep 7
 		   clear;
 		   exit;
 		 echo "======="
 		 ;;
 		 s)
-           echo " Saindo...  "
-           sleep 1
-           clear;
-           exit;
-         echo "======="
-         ;;
-	   esac 
-	   done
+                  echo " Saindo...  "
+                  sleep 1
+                  clear;
+                  exit;
+                 echo "======="
+                 ;;
+        esac 
+        done
       }
       menu
-	 sleep 2
+      sleep 2
      echo "=============================================================="
 ;;
-   4)
-     echo " Baixando e Configurando Cliente MySql: XAMPP"
+       4)
+	 echo " Baixando e Configurando Cliente MySql: XAMPP"
 	 echo ""
 	 cd ~/
 	 echo "Usaremos a versão 8.0.3 Caso precise atualize manualmente."
@@ -431,14 +431,14 @@ case "$x" in
 	 sudo rm -r xampp-linux-x64-8.0.3-0-installer.run
 	 sudo /opt/lampp/xampp startmysql
 	 sleep 2
-     echo "=============================================================="
+         echo "=============================================================="
 ;;
-   5)
-     echo " Saindo...  "
-     sleep 1
-     clear;
-     exit;
-     echo "=============================================================="
+       5)
+         echo " Saindo...  "
+         sleep 1
+         clear;
+         exit;
+         echo "=============================================================="
 ;;
 *)
 echo " Opção inválida! "
